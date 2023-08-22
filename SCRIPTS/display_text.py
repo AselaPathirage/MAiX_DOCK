@@ -2,6 +2,7 @@
 
 import lcd
 import time
+import image
 
 # Initialize LCD screen
 lcd.init(freq=15000000)
@@ -14,20 +15,21 @@ lcd.clear(lcd.WHITE)
 text_color = lcd.BLACK
 background_color = lcd.WHITE
 
-# Set font size and position
-font_size = 3
-x_pos = 50
-y_pos = 100
-
 # Display text
-lcd.draw_string(x_pos, y_pos, "Hello, Guna Busa", text_color, background_color)
+loading = image.Image(size=(lcd.width(), lcd.height()))
+loading.draw_rectangle((0, 0, lcd.width(), lcd.height()), fill=True, color=background_color)
+
+info = "Hello, Guna Busa"
+loading.draw_string(int(lcd.width()//2 - len(info) * 5), (lcd.height())//4, info, color=text_color, scale=2, mono_space=0)
 
 # Refresh the display
-lcd.display()
+lcd.display(loading)
 
 # Wait for a few seconds
 time.sleep(5)
 
 # Clear the screen before exiting
+loading.clear()
 lcd.clear(background_color)
-lcd.display()
+
+lcd.display(loading)
